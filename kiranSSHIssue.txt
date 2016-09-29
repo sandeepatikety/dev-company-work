@@ -1,0 +1,5 @@
+Type
+$ssh-keygen
+
+It will generate the rsa key in .ssh/id_rsa
+Copy the RSA key from it and add it to the https://github.com/settings/keys  
