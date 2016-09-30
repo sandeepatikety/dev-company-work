@@ -1,0 +1,36 @@
+On Ubuntu desktop or server install, you can also directly install the OpenSSH server package as you would install any other package. To install SSH server on Ubuntu, all you have to do is to install the OpenSSH server package that is readily available through the respositories. Use the following command to setup SSH server:
+
+sudo apt-get install openssh-server
+It is as simple as that.
+
+Recommended for you: Learn more about OpenSSH, PuTTY, Tunnels and Keys
+Configure SSH Server
+
+To install SSH server is very easy but making it much more secure requires a bit more work. After the installation is complete, edit the /etc/ssh/sshd_config file. But before you start editing any configuration file, I suggest you backup the original file:
+
+sudo cp -a /etc/ssh/sshd_config /etc/ssh/sshd_config_backup
+Now, use the following command to edit the file:
+
+sudo nano /etc/ssh/sshd_config
+The first thing you will want to edit is the port on which your SSH server listens. By default SSH server listens on port 22. Everybody knows that. Therefore, to secure your connection it is always advisable to run your SSH server on a non-standard port. So edit the following section to choose a random port number:
+
+# What ports, IPs and protocols we listen for
+Port 2122
+To increase your security further you can optional customize a couple more settings. The first is PermitRootLogin. Set this to no to disallow anybody to login as root, significantly reducing the chance of serious changes by hackers.
+
+# Authentication:
+LoginGraceTime 120
+PermitRootLogin no
+The second optional change to increase security is to list the users who are allowed to access the system remotely through SSH. To do this, add the following line to the end of the sshd_config file:
+
+AllowUsers user1 user2
+Replace user1 and user2 with the actual usernames.
+
+The only other thing you might want to ensure is that X11Forwarding is set to “yes”. This will allow you to run the softwares on your remote server on your local system. If the local system is Windows, which does not come with an X Server you could use free softwares such as Xming.
+
+After you install SSH server and make any changes to the configuration file (sshd_config) you will have to restart the service. Use the following command to restart SSH:
+
+sudo service ssh restart
+If you setup bash aliases as described in this post, you could use shortcuts (eg. sshrestart) to restart your OpenSSH server.
+
+
